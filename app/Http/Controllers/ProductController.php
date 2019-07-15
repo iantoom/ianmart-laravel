@@ -88,7 +88,13 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $success = $product->update($request->all());
+
+        if ($success) {
+            return response([
+                'data' => new ProductResource($product)
+            ], Response::HTTP_CREATED);
+        }
     }
 
     /**
