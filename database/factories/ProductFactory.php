@@ -11,6 +11,9 @@ $factory->define(Product::class, function (Faker $faker) {
         'description' => $faker->paragraph,
         'price' => $faker->numberBetween(10, 1000),
         'stock' => $faker->randomDigit,
-        'discount' => $faker->numberBetween(0, 75)
+        'discount' => $faker->numberBetween(0, 75),
+        'user_id' => function() {
+            return App\User::all()->random();
+        }
     ];
 });
