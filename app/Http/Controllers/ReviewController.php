@@ -11,6 +11,10 @@ use Illuminate\Http\Response;
 
 class ReviewController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api')->except('index', 'show');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -76,9 +80,12 @@ class ReviewController extends Controller
      * @param  \App\Model\Review  $review
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Review $review)
+    public function update(Request $request, Product $product, Review $review)
     {
-        //
+        $review->update($request->all());
+        return response([
+            'data' => new ReviewResource($review)
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -87,8 +94,12 @@ class ReviewController extends Controller
      * @param  \App\Model\Review  $review
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Review $review)
+    public function destroy(Product $product, Review $review)
     {
-        //
+        $review->delete();
+        
+        return response([
+            'data' => new ReviewResource($review)
+        ], Response::HTTP_NO_CONTENT);
     }
 }
