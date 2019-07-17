@@ -23,10 +23,11 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // return ProductResource::collection(Product::all());
-        return ProductCollection::collection(Product::paginate(5));
+        $size = $request->get('size', 5);
+        return ProductCollection::collection(Product::paginate($size));
     }
 
     /**
